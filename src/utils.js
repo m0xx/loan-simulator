@@ -87,80 +87,30 @@ function calcPeriodPayment({amount, annualRate, nbPeriodYear, nbPeriodTotal}) {
     return round(payment, 2)
 }
 
-// function calcPaymentHistory({amount, annualRate, nbPeriodYear, nbPeriodTotal}) {
-//     const history = [];
-//
-//     const payment = calcPeriodPayment({amount, annualRate, nbPeriodYear, nbPeriodTotal});
-//     let remainingPrincipal = amount;
-//     // let remaining = payment * nbPeriodTotal;
-//     let interestTotal = 0;
-//     let capitalTotal = 0;
-//
-//     for(let i=0; i < nbPeriodTotal; i++) {
-//         const noPeriod = i + 1;
-//
-//         const interest = round(annualRate / 100 / nbPeriodYear * remainingPrincipal);
-//         const capital = round(payment - interest);
-//
-//         // remaining = Math.max((remaining - payment), 0);
-//         // interestTotal += interest;
-//         // capitalTotal += capital + interest;
-//         remainingPrincipal = Math.max((remainingPrincipal - capital), 0);
-//
-//         history.push({
-//             noPeriod,
-//             payment,
-//             interest: round(interest),
-//             capital: round(payment - interest),
-//             balance:
-//             initialAmount: amount,
-//             interest: round(interest),
-//             capital: round(capital),
-//             interestTotal: round(interestTotal),
-//             capitalTotal: round(amount - remaining),
-//             remainingPrincipal: round(remainingPrincipal),
-//             remaining: round(remaining)
-//         })
-//     }
-//
-//     console.log(history)
-//     return history;
-// }
-
 function calcPaymentHistory({amount, annualRate, nbPeriodYear, nbPeriodTotal}) {
     const history = [];
 
     const payment = calcPeriodPayment({amount, annualRate, nbPeriodYear, nbPeriodTotal});
-    let remainingPrincipal = amount;
-    let remaining = payment * nbPeriodTotal;
-    let interestTotal = 0;
-    let capitalTotal = 0;
+    let balance = amount;
 
     for(let i=0; i < nbPeriodTotal; i++) {
         const noPeriod = i + 1;
+        const currentPayment = Math.min(payment, balance);
+        const interest = round(annualRate / 100 / nbPeriodYear * balance);
+        const capital = round(payment - interest);
 
-        const interest = annualRate / 100 / nbPeriodYear * remainingPrincipal;
-
-        let capital = payment - interest;
-
-        remaining = Math.max((remaining - payment), 0);
-        interestTotal += interest;
-        capitalTotal += capital + interest;
-        remainingPrincipal = Math.max((remainingPrincipal - capital), 0);
+        balance = Math.max((round(balance - capital)), 0);
 
         history.push({
             noPeriod,
             initialAmount: amount,
-            interest: round(interest),
-            capital: round(capital),
-            interestTotal: round(interestTotal),
-            capitalTotal: round(amount - remaining),
-            remainingPrincipal: round(remainingPrincipal),
-            remaining: round(remaining)
+            payment: currentPayment,
+            interest,
+            capital,
+            balance
         })
     }
 
-    console.log(history)
     return history;
 }
 

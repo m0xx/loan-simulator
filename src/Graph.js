@@ -6,15 +6,15 @@ import Rect from "@reach/rect";
 import CustomTooltip from './CustomTooltip';
 
 function Graph({payments, theme}) {
-    const total = payments[0].remaining;
+    const initialAmount = payments[0].initialAmount;
 
     const data = payments.map((payment) => {
         const totalPayment = payment.interest + payment.capital;
 
         return {
             ...payment,
-            interestPercent: payment.interest / totalPayment * total,
-            capitalPercent: payment.capital / totalPayment * total
+            interestPercent: payment.interest / totalPayment * initialAmount,
+            capitalPercent: payment.capital / totalPayment * initialAmount
         }
     })
 
@@ -49,7 +49,7 @@ function Graph({payments, theme}) {
                                 strokeWidth={theme.app.graph.lineStrokeWidth}
                                 dot={theme.app.graph.lineDot}
                                 activeDot={theme.app.graph.lineDotActive}
-                                dataKey="remaining"/>
+                                dataKey="balance"/>
                         </ComposedChart>
                     </React.Fragment>
                     }

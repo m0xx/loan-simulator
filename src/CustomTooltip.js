@@ -29,9 +29,9 @@ const styles = theme => ({
 function CustomTooltip({classes, active, payload, label, payments}) {
     if (active) {
         const noPeriod = parseInt(label);
-        const {interest, capital, remaining, remainingPrincipal} = payments[noPeriod - 1];
+        const {interest, capital, balance} = payments[noPeriod - 1];
         const data = [
-            {label: 'Balance', value: formatMoney(remaining)},
+            {label: 'Balance', value: formatMoney(balance)},
             {label: 'Remboursement', value: formatMoney(capital)},
             {label: 'Intérêts', value: formatMoney(interest)},
         ]

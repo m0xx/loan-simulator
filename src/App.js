@@ -25,8 +25,6 @@ class App extends React.Component {
 
     }
     handleOnCalculate({amount, duration, annualRate}) {
-        console.log(amount, duration, annualRate)
-        console.log(calcPeriodPayment({amount, annualRate, nbPeriodYear: 12, nbPeriodTotal: duration}))
         const payments = calcPaymentHistory({amount, annualRate, nbPeriodYear: 12, nbPeriodTotal: duration});
 
         this.setState({
