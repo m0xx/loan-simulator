@@ -1,0 +1,27 @@
+{
+  "name": "loan-projection",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel index.html",
+    "test": "tape src/*.test.js | tap-spec"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@material-ui/core": "^3.8.2",
+    "@reach/rect": "^0.1.1",
+    "classnames": "^2.2.6",
+    "prop-types": "^15.6.2",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "recharts": "^1.4.2"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.11.0",
+    "tap-spec": "^5.0.0",
+    "tape": "^4.9.2"
+  },
+  "description": ""
+}
