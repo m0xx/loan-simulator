@@ -58,7 +58,9 @@ class Form extends React.Component {
         }
     }
 
-    handleSubmit() {
+    handleSubmit(evt) {
+        evt.preventDefault();
+        
         const {onCalculate} = this.props;
 
         const errorFields = ['amount', 'duration', 'annualRate']
@@ -81,41 +83,43 @@ class Form extends React.Component {
         const {errorFields} = this.state;
 
         return (
-            <div className={classes.root}>
-                <FormControl className={classes.formControl} error={errorFields.indexOf('amount') > -1}>
-                    <InputLabel htmlFor="adornment-amount">Montant du prêt</InputLabel>
-                    <Input
-                        id="adornment-amount"
-                        value={this.state.amount}
-                        onChange={this.handleChange('amount')}
-                        type="number"
-                        startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                    />
-                </FormControl>
-                <FormControl className={classes.formControl} error={errorFields.indexOf('annualRate') > -1}>
-                    <InputLabel htmlFor="adornment-annual-rate">Taux d'intérêt annuel (%)</InputLabel>
-                    <Input
-                        id="adornment-annual-rate"
-                        value={this.state.annualRate}
-                        onChange={this.handleChange('annualRate')}
-                        type="number"
-                        startAdornment={<InputAdornment position="start">%</InputAdornment>}
-                    />
-                </FormControl>
-                <FormControl className={classes.formControl} error={errorFields.indexOf('duration') > -1}>
-                    <InputLabel htmlFor="adornment-duration">Durée de l'emprunt (mois)</InputLabel>
-                    <Input
-                        id="adornment-duration"
-                        value={this.state.duration}
-                        onChange={this.handleChange('duration')}
-                        type="number"
-                        endAdornment={<InputAdornment position="end">Mois</InputAdornment>}
-                    />
-                </FormControl>
-                <Button variant="contained" color="primary" onClick={this.handleSubmit}>
-                    Calculer
-                </Button>
-            </div>
+            <form onSubmit={this.handleSubmit}>
+                <div className={classes.root}>
+                        <FormControl className={classes.formControl} error={errorFields.indexOf('amount') > -1}>
+                            <InputLabel htmlFor="adornment-amount">Montant du prêt</InputLabel>
+                            <Input
+                                id="adornment-amount"
+                                value={this.state.amount}
+                                onChange={this.handleChange('amount')}
+                                type="number"
+                                startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                            />
+                        </FormControl>
+                        <FormControl className={classes.formControl} error={errorFields.indexOf('annualRate') > -1}>
+                            <InputLabel htmlFor="adornment-annual-rate">Taux d'intérêt annuel (%)</InputLabel>
+                            <Input
+                                id="adornment-annual-rate"
+                                value={this.state.annualRate}
+                                onChange={this.handleChange('annualRate')}
+                                type="number"
+                                startAdornment={<InputAdornment position="start">%</InputAdornment>}
+                            />
+                        </FormControl>
+                        <FormControl className={classes.formControl} error={errorFields.indexOf('duration') > -1}>
+                            <InputLabel htmlFor="adornment-duration">Durée de l'emprunt (mois)</InputLabel>
+                            <Input
+                                id="adornment-duration"
+                                value={this.state.duration}
+                                onChange={this.handleChange('duration')}
+                                type="number"
+                                endAdornment={<InputAdornment position="end">Mois</InputAdornment>}
+                            />
+                        </FormControl>
+                        <Button type="submit" variant="contained" color="primary">
+                            Calculer
+                        </Button>
+                </div>
+            </form>
         )
     }
 }
