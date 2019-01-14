@@ -60,7 +60,7 @@ class Form extends React.Component {
 
     handleSubmit(evt) {
         evt.preventDefault();
-        
+
         const {onCalculate} = this.props;
 
         const errorFields = ['amount', 'duration', 'annualRate']
