@@ -1,6 +1,9 @@
 steps:
 - name: node:10.10.0
   entrypoint: npm
+  args: ['install']
+- name: node:10.10.0
+  entrypoint: npm
   args: ['run', 'build']
 - name: gcr.io/cloud-builders/gsutil
   args: ["-m", "rsync", "-r", "-c", "-d", "./dist", "gs://loan-simulator"]
