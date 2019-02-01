@@ -34,6 +34,9 @@ const styles = theme => ({
     }
 });
 
+function parseFloatWithComma(value) {
+    return parseFloat(typeof value === 'string' ? value.replace(',', '.') : value);
+}
 
 class Form extends React.Component {
     constructor(props) {
@@ -54,7 +57,7 @@ class Form extends React.Component {
 
     handleChange(name) {
         return (event) => {
-            this.setState({[name]: parseFloat(event.target.value), errorFields: this.state.errorFields.filter((field) => (field !== name))})
+            this.setState({[name]: event.target.value, errorFields: this.state.errorFields.filter((field) => (field !== name))})
         }
     }
 
@@ -65,7 +68,9 @@ class Form extends React.Component {
 
         const errorFields = ['amount', 'duration', 'annualRate']
             .filter((field) => {
-                return !this.state[field];
+                const value = this.state[field];
+
+                return !value || (typeof value === 'string' && isNaN(value.replace(',', '.')))
             })
 
         if(errorFields.length) {
@@ -74,7 +79,11 @@ class Form extends React.Component {
         else {
             const {amount, duration, annualRate} = this.state;
 
-            onCalculate({amount, duration, annualRate});
+            onCalculate({
+                amount: parseFloatWithComma(amount),
+                annualRate: parseFloatWithComma(annualRate),
+                duration: duration,
+            });
         }
     }
 
@@ -91,7 +100,6 @@ class Form extends React.Component {
                                 id="adornment-amount"
                                 value={this.state.amount}
                                 onChange={this.handleChange('amount')}
-                                type="number"
                                 startAdornment={<InputAdornment position="start">$</InputAdornment>}
                             />
                         </FormControl>
@@ -101,7 +109,6 @@ class Form extends React.Component {
                                 id="adornment-annual-rate"
                                 value={this.state.annualRate}
                                 onChange={this.handleChange('annualRate')}
-                                type="number"
                                 startAdornment={<InputAdornment position="start">%</InputAdornment>}
                             />
                         </FormControl>
